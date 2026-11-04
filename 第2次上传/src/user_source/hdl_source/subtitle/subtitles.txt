@@ -1,0 +1,11 @@
+# 字幕文本：每行一条，格式  名字=中文|English
+#   PIC1~PIC4 跟着对应图片显示，EMERG 是应急模式字幕，NOTICE 预留给以后串口发的寻物/寻人启事
+#   中文和英文之间自动空出 3 个汉字宽；某一部分不要就留空；整条留空 = 这张图不显示字幕
+#   每条最长 1024 列：一个汉字 16 列，一个英文字母/空格 8 列（约 64 个汉字）
+# 改完保存，双击 gen_subtitle.bat 重新生成 ../subtitle_rom.v，再在 TD 里重新编译
+PIC1=智屏安播：平时服务社区，急时守护平安。日常轮播、启事插播、分级应急|Smart Screen: Serving Daily, Guarding in Emergencies
+PIC2=致敬杂交水稻之父袁隆平：“我毕生的追求就是让所有人远离饥饿”。珍惜粮食|Tribute to Yuan Longping - Cherish Every Grain
+PIC3=文明社区，你我共建：讲文明、树新风，邻里和睦，志愿服务，共享美好家园|Building a Civilized Community Together
+PIC4=文明社区，幸福家园：文明礼貌、爱护环境、尊老爱幼、和睦相处，邻里互助共享温馨生活|Civilized Community, Happy Home
+EMERG=紧急情况！请保持冷静，按照屏幕提示和现场人员指引行动|EMERGENCY! Stay calm and follow the instructions on screen
+NOTICE=

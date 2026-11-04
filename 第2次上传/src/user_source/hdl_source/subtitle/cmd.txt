@@ -1,0 +1,127 @@
+# 串口文字指令：口令、指令关键字、回复文字。改完保存，双击 gen_cmd.bat 重新生成 ../cmd_rom.v，再在 TD 里重新编译
+#   只改等号后面的文字，不要增删行、不要改等号前面的名字（FPGA 按固定顺序取）
+#   上位机里这样发：口令 空格 指令，例如  8848 音乐开   /   8848 通知 寻物启事：……（空格可省：8848音乐开）
+#   回复由 FPGA 发回上位机（UTF-8），末尾自动加回车换行
+PIN=8848
+
+# 指令关键字
+KW_NOTICE=通知
+KW_CLEAR=撤销通知
+KW_SUBON=字幕开
+KW_SUBOFF=字幕关
+KW_MUSON=音乐开
+KW_MUSOFF=音乐关
+KW_NEXT=下一张
+KW_PREV=上一张
+KW_HELP=帮助
+KW_FONT=装字库
+# 【三级应急】应急1 紧急撤离 / 应急2 就地避险 / 应急3 区域警戒，后面可以跟类型和内容：8848 应急1 火灾  /  8848 应急3 东门临时封闭，请走西门
+KW_ALM1=应急1
+KW_ALM2=应急2
+KW_ALM3=应急3
+KW_ALMCLR=解除
+# 【启事】寻人 / 寻物 / 招领（失物招领）后面跟内容，最多 4 条，掉电保存：8848 寻人 张大爷，75岁，身穿蓝色外套……
+#   启事 = 查看现有的启事；撤销1~撤销4 = 撤销第几条；撤销全部
+KW_QP=寻人
+KW_QT=寻物
+KW_QF=招领
+KW_QF2=失物招领
+KW_QLIST=启事
+KW_QDALL=撤销全部
+KW_QDEL=撤销
+# 【按键改造】自动轮播开关（和 Key4 短按是同一个开关）；消音 = 应急时关掉警报声，画面告警保持（和应急时 KEY3 短按一样）
+KW_AUTOON=轮播开
+KW_AUTOOFF=轮播关
+KW_MUTE=消音
+# 应急类型（只写类型不写内容时，屏上显示下面对应的提示语）
+TY_FIRE=火灾
+TY_QUAKE=地震
+TY_SECU=治安
+TY_FAULT=故障
+
+# 应急提示语：有类型用类型的，没有类型用这一级的（每条不超过 18 个字，警示页上正好一行）
+TP_FIRE=发生火灾，请沿安全通道撤离，勿乘电梯
+TP_QUAKE=发生地震，请远离玻璃窗，听从现场指引
+TP_SECU=治安事件，请远离事发区域，听从指挥
+TP_FAULT=设施故障，请暂停使用，改走备用通道
+TP_L1=请立即沿安全出口有序撤离，勿乘电梯
+TP_L2=请就地避险，留在安全区域，等待通知
+TP_L3=请避开相关区域，听从工作人员安排
+
+# 回复
+RP_OK_NOTICE=OK 通知已显示
+RP_OK_TRUNC=OK 通知已显示（太长，超出部分已截掉）
+RP_OK_CLEAR=OK 通知已撤销
+RP_OK_SUBON=OK 字幕已打开
+RP_OK_SUBOFF=OK 字幕已关闭
+RP_OK_MUSON=OK 音乐已播放
+RP_OK_MUSOFF=OK 音乐已暂停
+RP_OK_NEXT=OK 下一张
+RP_OK_PREV=OK 上一张
+RP_HELP=指令：通知 内容/撤销通知/寻人|寻物|招领 内容/照片1~4/启事/撤销1~4/撤销全部/字幕1~4 内容/字幕开|关/波形开|关/分辨率开|关/轮播开|关/音乐开|关/下一张|上一张/应急1~3 [类型] [内容]/消音/解除/装字库
+RP_ERR_PIN=ERR 口令错误，指令已拒绝
+RP_ERR_UNKNOWN=ERR 未知指令，发送 口令 帮助 查看全部指令
+RP_ERR_EMPTY=ERR 内容是空的
+RP_ERR_NOFONT=ERR 字库未安装，请先发送 口令 装字库
+RP_ERR_FLASH=ERR Flash 不可用
+RP_ERR_EMERG=ERR 应急模式中，指令未执行
+RP_FONT_READY=READY 请在 60 秒内发送 FONT.BIN 文件（大约要传 8 秒）
+RP_FONT_OK=OK 字库安装完成，校验通过
+RP_FONT_BAD=ERR 字库校验失败，请重新安装
+RP_FONT_BROKEN=ERR 字库传输中断，请重新安装
+RP_OK_ALM1=OK 一级应急（紧急撤离）已启动
+RP_OK_ALM2=OK 二级应急（就地避险）已启动
+RP_OK_ALM3=OK 三级应急（区域警戒）已启动
+RP_OK_ALMCLR=OK 应急已解除，恢复正常播放
+RP_OK_ALMSW1=OK 串口应急已解除，但 SW1 仍在应急位置，请拨回
+RP_OK_ALMNOTXT=OK 应急已启动（字库未安装，屏上不显示文字）
+# 【启事】
+RP_OK_Q1=OK 启事已发布（第 1 条），马上插播
+RP_OK_Q2=OK 启事已发布（第 2 条），马上插播
+RP_OK_Q3=OK 启事已发布（第 3 条），马上插播
+RP_OK_Q4=OK 启事已发布（第 4 条），马上插播
+RP_OK_QLONG=OK 启事已发布，但文字太长，屏上只显示前面约 120 个字
+RP_ERR_QFULL=ERR 启事已满 4 条，请先发送 口令 撤销n（n 是 1~4），可发 口令 启事 查看
+RP_OK_QDEL=OK 这条启事已撤销
+RP_OK_QDALL=OK 全部启事已撤销
+RP_ERR_QNONE=ERR 没有这一条启事，可发 口令 启事 查看
+RP_ERR_QSAVE=ERR 已更新，但保存到 Flash 失败（断电后会丢失）
+RP_LS_HEAD=OK 当前启事：
+# 启事列表的拼接片段（LS_ 后面不自动加回车换行，\n = 回车换行）
+LS_N1=1、
+LS_N2=2、
+LS_N3=3、
+LS_N4=4、
+LS_T1=寻人启事：
+LS_T2=寻物启事：
+LS_T3=失物招领：
+LS_EMPTY=（空）\n
+LS_EOL=\n
+# 【按键改造】
+RP_OK_AUTOON=OK 自动轮播已打开
+RP_OK_AUTOOFF=OK 自动轮播已关闭
+RP_OK_MUTE=OK 已消音（画面告警保持，解除或升级后恢复声音）
+RP_ERR_NOALM=ERR 当前没有应急，不需要消音
+# 【串口照片】照片1~照片4 = 给第几条启事加照片（先发布启事）；PHOTO.BIN 用 notice_tool/gen_photo.bat 生成
+KW_PHOTO=照片
+RP_PH_READY=READY 请在 60 秒内发送 PHOTO.BIN 文件（大约要传 10 秒）
+RP_PH_OK=OK 照片已装好，马上插播这条启事
+RP_PH_BAD=ERR 照片校验失败，请重新发送
+RP_PH_BROKEN=ERR 照片传输中断，请重新发送
+# 【自定义字幕】字幕1~字幕4 内容 = 第几张图（PIC1~PIC4）下面的滚动字幕换成这句话，断电不丢；只写 字幕n 不写内容 = 恢复默认字幕
+#   （“字幕开 / 字幕关”是开关，不受影响）
+KW_SUB=字幕
+RP_SUB_OK=OK 这张图的字幕已更新（断电不丢）
+RP_SUB_LONG=OK 字幕已更新，但太长，只显示前面约 64 个字
+RP_SUB_DEF=OK 这张图已恢复默认字幕
+RP_SUB_BADN=ERR 请写 字幕1~字幕4（第几张图）再跟内容，只写 字幕n 是恢复默认字幕
+# 【波形开关】波形开 / 波形关 = 字幕上方的音频波形（和 KEY3 + Key2 同时按是同一个开关，断电不丢）
+# 【分辨率显示】分辨率开 / 分辨率关 = 左上角显示这张图的原图分辨率（演示缩放用，断电后默认关）
+KW_WAVEON=波形开
+KW_WAVEOFF=波形关
+KW_RESON=分辨率开
+KW_RESOFF=分辨率关
+RP_OK_WAVEON=OK 波形已打开
+RP_OK_WAVEOFF=OK 波形已关闭
+RP_OK_RESON=OK 已显示原图分辨率
+RP_OK_RESOFF=OK 已关闭分辨率显示

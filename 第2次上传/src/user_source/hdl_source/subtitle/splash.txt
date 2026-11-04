@@ -1,0 +1,79 @@
+# 开机画面（开机自检）文字：改完保存，双击 gen_splash.bat 重新生成 ../splash_rom.v，再在 TD 里重新编译
+#   TITLE  大标题，微软雅黑粗体 48 像素，建议不超过 8 个字
+#   其余每行 16 像素宋体：一个汉字 16 像素宽，一个英文字母/空格 8 像素宽
+#   只改等号后面的文字，不要增删行、不要改等号前面的名字（FPGA 按固定顺序取）
+#   长度限制：L_ 项目名 ≤ 160 像素；R_ 结果 ≤ 300 像素（R_PIC_ 前面还有“2/4”，≤ 270）；其余 ≤ 640 像素
+TITLE=智屏安播
+SUB_CN=基于 FPGA 的社区分级信息发布终端
+SUB_EN=FPGA-based Tiered Community Information Terminal
+HEAD=系统自检  System Self-Check
+
+# 自检项目（一行一项，按这个顺序逐行出现）
+L_DISP=显示通道  Display
+L_SET=参数存储  Settings
+L_CARD=存储卡  TF Card
+L_MUS=背景音乐  Music
+L_PIC=节目画面  Pictures
+L_EMG=应急画面  Emergency
+L_FONT=通知字库  Font
+
+# 自检结果（绿色 = 正常，黄色 = 有问题但能用，红色 = 不能用）
+R_DISP_OK=HDMI 640×480  正常
+R_SET_WAIT=读取中……
+R_SET_OK=已恢复上次的设置
+R_SET_DEF=首次使用，默认设置
+R_SET_ERR=Flash 异常，使用默认设置
+R_CARD_WAIT=检测中……
+R_CARD_NO=未检测到，插入后将自动载入
+R_CARD_OK=FAT32  正常
+R_CARD_ERR=没有可播放的图片
+R_MUS_OK=MUSIC.WAV  已找到
+R_MUS_NO=未找到，使用提示音
+R_PIC_WAIT=载入中……
+R_PIC_OK=全部载入
+R_PIC_PART=已载入，部分失败
+R_PIC_ERR=无法载入
+R_EMG_WAIT=载入中……
+R_EMG_OK=EMERG.BMP  已就绪
+R_EMG_NO=未找到，使用内置警示页
+R_EMG_ERR=载入失败，使用内置警示页
+R_FONT_OK=已安装（串口通知可用）
+R_FONT_NO=未安装，请发 口令 装字库
+R_FONT_ERR=Flash 不可用，串口通知关闭
+
+# 底部状态（中文一行 + 英文一行）
+CHECK_CN=系统自检中……
+CHECK_EN=Running self-check...
+DONE_CN=自检完成，正在进入信息发布……
+DONE_EN=Self-check complete. Starting display...
+NOCARD_CN=未检测到 TF 卡，插入后将自动载入
+NOCARD_EN=No TF card. Insert one and it will load automatically
+FS_CN=卡上没有 PIC1-PIC4.BMP 或不是 FAT32，检查后长按 Key1 三秒重启
+FS_EN=No PIC1-PIC4.BMP or not FAT32. Fix it, then hold Key1 for 3 s
+FMT_CN=图片格式不支持，换成 24 位 BMP 后长按 Key1 三秒重启
+FMT_EN=Unsupported picture. Use 24-bit BMP, then hold Key1 for 3 s
+READ_CN=TF 卡读取出错，重新插卡后长按 Key1 三秒重启
+READ_EN=TF card read error. Re-insert it, then hold Key1 for 3 s
+
+# 【内置安全页】开机时卡有致命问题（没插卡 / 没有图 / 图都载不进来）超过 10 秒，显示这一页
+#   S1~S4 前面依次是：火焰、禁止堵塞、安全出口、急救 四个图标；中文 ≤ 480 像素（30 个汉字），英文同样
+SAFE_TITLE=安全提示
+SAFE_SUB=SAFETY NOTICE
+S1_CN=发现火情，请立即拨打 119
+S1_EN=In case of fire, call 119 immediately
+S2_CN=请勿占用、堵塞消防通道和安全出口
+S2_EN=Keep fire lanes and exits clear
+S3_CN=紧急疏散请走安全出口，切勿乘坐电梯
+S3_EN=Evacuate via safety exits. Do not use lifts
+S4_CN=急救电话 120　　报警电话 110
+S4_EN=Ambulance 120    Police 110
+SAFE_NOTE=存储卡未就绪，以上为设备内置的安全提示
+
+# 【拔卡提示】右上角小框，每行 ≤ 260 像素
+LOST_CN=存储卡已移除，节目照常播放
+LOST_EN=Card removed - still playing
+BACK_CN=存储卡已恢复
+BACK_EN=Card restored
+# 【串口通知】认证不通过 / 序号是旧的（重放）时右上角红框 3 秒
+REJ_CN=非法指令已拒绝
+REJ_EN=Unauthorized command rejected
